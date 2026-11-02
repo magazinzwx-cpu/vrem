@@ -1,0 +1,672 @@
+<title>Наше время</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600&family=Marck+Script&family=Nunito:wght@400;600&display=swap">
+<style>
+/* Layout: one night sky, a heart that is also a clock face at the top, names in script, six glass tiles ticking below. Single look on purpose: dusk plum, rose glow. */
+:root {
+  --night: #0e0527;
+  --dusk: #2c1164;
+  --horizon: #5a28a8;
+  --rose: #c77dff;
+  --blush: #e6cfff;
+  --gold: #ffd89b;
+  --ink: #f6f0ff;
+  --ink-dim: #b9a6de;
+  --glass: rgba(255, 255, 255, 0.07);
+  --glass-line: rgba(205, 170, 255, 0.24);
+  --font-script: "Marck Script", "Segoe Script", cursive;
+  --font-num: "Comfortaa", "Nunito", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html, body { height: auto; }
+
+body {
+  margin: 0;
+  background: var(--night) linear-gradient(180deg, var(--night) 0%, var(--dusk) 58%, var(--horizon) 100%) fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 36px;
+  min-height: 100vh;
+}
+
+#sky {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+.glow {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.38;
+}
+.glow.a { width: 60vmax; height: 60vmax; left: -20vmax; bottom: -26vmax; background: #8b3dff; animation: drift-a 26s ease-in-out infinite alternate; }
+.glow.b { width: 46vmax; height: 46vmax; right: -16vmax; top: 6vh; background: #c04dff; opacity: 0.28; animation: drift-b 32s ease-in-out infinite alternate; }
+
+@keyframes drift-a { to { transform: translate(8vmax, -6vmax) scale(1.12); } }
+@keyframes drift-b { to { transform: translate(-7vmax, 8vmax) scale(0.92); } }
+
+main, .intro {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  text-align: center;
+}
+
+/* heart clock */
+.clock {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  flex: none;
+}
+.clock > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring-bg { fill: none; stroke: rgba(205, 170, 255, 0.16); stroke-width: 2; }
+.ring { fill: none; stroke: var(--rose); stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(199, 125, 255, 0.8)); }
+.heart-wrap { position: absolute; inset: 0; display: grid; place-items: center; }
+.heart {
+  width: 58px;
+  height: 58px;
+  fill: var(--rose);
+  filter: drop-shadow(0 0 14px rgba(199, 125, 255, 0.85));
+  transform-origin: 50% 55%;
+  animation: beat 1.5s ease-in-out infinite;
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.16); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.9rem, 11vw, 5.4rem);
+  line-height: 1.05;
+  color: var(--blush);
+  text-shadow: 0 0 28px rgba(199, 125, 255, 0.55);
+  text-wrap: balance;
+}
+h1 .amp { color: var(--gold); padding-inline: 0.12em; }
+
+.eyebrow {
+  margin: -8px 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* tiles */
+.tiles {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 760px) {
+  .tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+}
+.tile {
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  border-radius: 24px;
+  padding: 18px 6px 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 0;
+}
+.tile .n {
+  display: block;
+  font-family: var(--font-num);
+  font-weight: 300;
+  font-size: clamp(2.1rem, 7.4vw, 3.3rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.tile .u {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.tile.live { border-color: rgba(199, 125, 255, 0.5); box-shadow: 0 0 30px rgba(199, 125, 255, 0.18); }
+.tile.live .n { color: var(--rose); font-weight: 400; }
+.pop { animation: pop 0.45s ease-out; }
+@keyframes pop {
+  0% { transform: translateY(-6px); opacity: 0.2; }
+  100% { transform: none; opacity: 1; }
+}
+
+.totals {
+  margin: 2px 0 0;
+  max-width: 34rem;
+  color: var(--ink-dim);
+  font-size: 0.98rem;
+  font-variant-numeric: tabular-nums;
+  text-wrap: balance;
+}
+.totals b { color: var(--blush); font-weight: 600; }
+
+.next {
+  margin: 0;
+  display: inline-block;
+  padding: 8px 18px;
+  border: 1px dashed rgba(255, 216, 155, 0.5);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 0.95rem;
+  text-wrap: balance;
+}
+
+.line {
+  margin: 6px 0 0;
+  max-width: 30rem;
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 5.4vw, 2.3rem);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.foot {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  opacity: 0.85;
+}
+
+.back {
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.back:hover { color: var(--blush); }
+.back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* первый экран с кнопкой */
+.intro .eyebrow { margin: 0; }
+.ask {
+  appearance: none;
+  border: 1px solid rgba(230, 207, 255, 0.55);
+  border-radius: 999px;
+  padding: 16px 34px 18px;
+  max-width: 100%;
+  background: linear-gradient(135deg, #9b4dff 0%, #c77dff 100%);
+  color: #fff;
+  font-family: var(--font-script);
+  font-size: clamp(1.7rem, 6.4vw, 2.3rem);
+  line-height: 1.15;
+  cursor: pointer;
+  text-wrap: balance;
+  box-shadow: 0 0 34px rgba(199, 125, 255, 0.55), 0 8px 26px rgba(10, 0, 40, 0.45);
+  animation: ask-pulse 2.6s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+.ask:hover { transform: scale(1.04); }
+.ask:active { transform: scale(0.97); }
+.ask:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+@keyframes ask-pulse {
+  0%, 100% { box-shadow: 0 0 26px rgba(199, 125, 255, 0.45), 0 8px 26px rgba(10, 0, 40, 0.45); }
+  50% { box-shadow: 0 0 52px rgba(199, 125, 255, 0.85), 0 8px 26px rgba(10, 0, 40, 0.45); }
+}
+
+main.reveal > * { animation: rise 0.8s ease-out both; }
+main.reveal > *:nth-child(2) { animation-delay: 0.12s; }
+main.reveal > *:nth-child(3) { animation-delay: 0.22s; }
+main.reveal > *:nth-child(4) { animation-delay: 0.34s; }
+main.reveal > *:nth-child(5) { animation-delay: 0.5s; }
+main.reveal > *:nth-child(6) { animation-delay: 0.62s; }
+main.reveal > *:nth-child(7) { animation-delay: 0.74s; }
+main.reveal > *:nth-child(8) { animation-delay: 0.98s; }
+main.reveal > *:nth-child(9) { animation-delay: 1.1s; }
+main.reveal > *:nth-child(10) { animation-delay: 1.2s; }
+
+.more {
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  padding: 12px 28px 14px;
+  margin-top: 6px;
+}
+
+#pcanvas {
+  display: block;
+  max-width: 100%;
+  filter: drop-shadow(0 0 22px rgba(199, 125, 255, 0.45));
+}
+.portrait .line { margin: 0; }
+.portrait.reveal .pcap { animation: rise 1.2s ease-out 4.6s both; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .heart, .pop, .ask, main.reveal > *, .portrait.reveal .pcap { animation: none; }
+  .ask { transition: none; }
+}
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="glow a" aria-hidden="true"></div>
+<div class="glow b" aria-hidden="true"></div>
+
+<section class="intro" id="intro">
+  <div class="clock" aria-hidden="true">
+    <div class="heart-wrap">
+      <svg class="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+  </div>
+  <p class="eyebrow">у меня для тебя кое-что есть</p>
+  <button type="button" class="ask" id="ask">Знаешь, сколько мы вместе?</button>
+</section>
+
+<main id="stage" hidden>
+  <div class="clock" aria-hidden="true">
+    <svg viewBox="0 0 132 132">
+      <circle class="ring-bg" cx="66" cy="66" r="60"></circle>
+      <circle id="ring" class="ring" cx="66" cy="66" r="60" transform="rotate(-90 66 66)"></circle>
+    </svg>
+    <div class="heart-wrap">
+      <svg class="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+  </div>
+
+  <h1 id="names"></h1>
+  <p class="eyebrow">вместе уже</p>
+
+  <ul class="tiles" role="timer" aria-label="Сколько мы вместе">
+    <li class="tile"><span class="n" id="n-y">0</span><span class="u" id="u-y">лет</span></li>
+    <li class="tile"><span class="n" id="n-mo">0</span><span class="u" id="u-mo">месяцев</span></li>
+    <li class="tile"><span class="n" id="n-d">0</span><span class="u" id="u-d">дней</span></li>
+    <li class="tile"><span class="n" id="n-h">0</span><span class="u" id="u-h">часов</span></li>
+    <li class="tile"><span class="n" id="n-mi">0</span><span class="u" id="u-mi">минут</span></li>
+    <li class="tile live"><span class="n" id="n-s">0</span><span class="u" id="u-s">секунд</span></li>
+  </ul>
+
+  <p class="totals" id="totals"></p>
+  <p class="next" id="next"></p>
+  <p class="line" id="line"></p>
+  <button type="button" class="ask more" id="more">Смотри, что ещё есть</button>
+  <p class="foot" id="since"></p>
+  <a class="back" id="back" href="#start">← на первую страницу</a>
+</main>
+
+<section class="intro portrait" id="portrait" hidden>
+  <canvas id="pcanvas" role="img" aria-label="Портрет, собранный из маленьких сердечек"></canvas>
+  <p class="line pcap" id="pcap"></p>
+  <a class="back" id="back2" href="#together">← к счётчику</a>
+</section>
+
+<script>
+(function () {
+  /* ====== Настройки: поменяй под вас ====== */
+  var CONFIG = {
+    start: new Date(2024, 0, 5, 14, 0, 0),   // год, месяц (0 = январь), день, часы, минуты, секунды
+    names: ['Миша', 'Юля'],
+    line: 'Каждая секунда с тобой — моя любимая',
+    portraitLine: 'Ты — моё любимое сердце'
+  };
+  /* ======================================== */
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function $(id) { return document.getElementById(id); }
+  function ru(n, f) {
+    var a = Math.abs(n) % 100, b = a % 10;
+    if (a > 10 && a < 20) return f[2];
+    if (b > 1 && b < 5) return f[1];
+    if (b === 1) return f[0];
+    return f[2];
+  }
+  function fmt(n) { return Number(n).toLocaleString('ru-RU'); }
+
+  function addMonths(date, n) {
+    var d = new Date(date), day = d.getDate();
+    d.setDate(1);
+    d.setMonth(d.getMonth() + n);
+    var last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+    d.setDate(Math.min(day, last));
+    return d;
+  }
+
+  var start = CONFIG.start;
+  $('names').innerHTML = CONFIG.names[0] + '<span class="amp">&amp;</span>' + CONFIG.names[1];
+  $('line').textContent = CONFIG.line;
+  $('since').textContent = 'С ' + start.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) +
+    ' · нажми на экран, и полетят сердечки';
+  document.title = CONFIG.names[0] + ' и ' + CONFIG.names[1] + ' — наше время';
+
+  var cache = {};
+  function setText(id, val) {
+    if (cache[id] === val) return false;
+    cache[id] = val;
+    $(id).textContent = val;
+    return true;
+  }
+
+  function update() {
+    var now = new Date();
+    if (now < start) now = new Date(start);
+
+    var months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    if (addMonths(start, months) > now) months--;
+    var anchor = addMonths(start, months);
+    var rest = Math.floor((now - anchor) / 1000);
+
+    var days = Math.floor(rest / 86400); rest -= days * 86400;
+    var hours = Math.floor(rest / 3600); rest -= hours * 3600;
+    var mins = Math.floor(rest / 60);
+    var secs = rest - mins * 60;
+    var years = Math.floor(months / 12);
+    var mo = months % 12;
+
+    setText('n-y', years); setText('u-y', ru(years, ['год', 'года', 'лет']));
+    setText('n-mo', mo); setText('u-mo', ru(mo, ['месяц', 'месяца', 'месяцев']));
+    setText('n-d', days); setText('u-d', ru(days, ['день', 'дня', 'дней']));
+    setText('n-h', hours); setText('u-h', ru(hours, ['час', 'часа', 'часов']));
+    setText('n-mi', mins); setText('u-mi', ru(mins, ['минута', 'минуты', 'минут']));
+    if (setText('n-s', secs) && !reduce) {
+      var el = $('n-s');
+      el.classList.remove('pop');
+      void el.offsetWidth;
+      el.classList.add('pop');
+    }
+    setText('u-s', ru(secs, ['секунда', 'секунды', 'секунд']));
+
+    var tDays = Math.floor((now - start) / 86400000);
+    var tHours = Math.floor((now - start) / 3600000);
+    var tSecs = Math.floor((now - start) / 1000);
+    var t = 'Это <b>' + fmt(tDays) + '</b> ' + ru(tDays, ['день', 'дня', 'дней']) +
+      ', <b>' + fmt(tHours) + '</b> ' + ru(tHours, ['час', 'часа', 'часов']) +
+      ' или <b>' + fmt(tSecs) + '</b> ' + ru(tSecs, ['секунда', 'секунды', 'секунд']) + ' рядом';
+    if (cache.totals !== t) { cache.totals = t; $('totals').innerHTML = t; }
+
+    var nextN = months + 1;
+    var nextDate = addMonths(start, nextN);
+    var left = Math.ceil((nextDate - now) / 86400000);
+    var what = nextN % 12 === 0
+      ? (nextN / 12) + ' ' + ru(nextN / 12, ['год', 'года', 'лет']) + ' вместе'
+      : nextN + ' ' + ru(nextN, ['месяц', 'месяца', 'месяцев']) + ' вместе';
+    var nx = 'Через ' + left + ' ' + ru(left, ['день', 'дня', 'дней']) + ' будет ' + what;
+    setText('next', nx);
+  }
+
+  /* кольцо секунд вокруг сердца */
+  var ring = $('ring');
+  var C = 2 * Math.PI * 60;
+  ring.style.strokeDasharray = C;
+  function setRing() {
+    var n = new Date();
+    var p = (n.getSeconds() + n.getMilliseconds() / 1000) / 60;
+    ring.style.strokeDashoffset = C * (1 - p);
+  }
+
+  /* небо: звёзды, сердечки, падающие звёзды */
+  var cv = $('sky'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, DPR = 1;
+  var stars = [], hearts = [], shoots = [];
+  var heartPath = new Path2D('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+  var palette = ['199,125,255', '230,207,255', '255,216,155', '160,100,255'];
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    var count = Math.round(W * H / 5200);
+    stars = [];
+    for (var i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.3,
+        ph: Math.random() * 6.28, sp: Math.random() * 1.6 + 0.4,
+        warm: Math.random() < 0.25
+      });
+    }
+  }
+
+  function spawnHeart(x, y, burst) {
+    hearts.push({
+      x: x, y: y,
+      vy: -(burst ? Math.random() * 1.2 + 1.0 : Math.random() * 0.5 + 0.35),
+      vx: burst ? (Math.random() - 0.5) * 1.4 : 0,
+      s: burst ? Math.random() * 18 + 14 : Math.random() * 16 + 9,
+      a: burst ? 0.9 : Math.random() * 0.35 + 0.18,
+      ph: Math.random() * 6.28, sw: Math.random() * 0.8 + 0.4,
+      c: palette[Math.floor(Math.random() * palette.length)],
+      life: 0
+    });
+    if (hearts.length > 140) hearts.shift();
+  }
+
+  function drawStars(t) {
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var tw = reduce ? 0.8 : 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * s.sp + s.ph));
+      ctx.fillStyle = (s.warm ? 'rgba(255,216,155,' : 'rgba(247,240,255,') + tw.toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.2832); ctx.fill();
+    }
+  }
+
+  var last = 0, nextAmbient = 0, nextShoot = 4;
+  function frame(ms) {
+    var t = ms / 1000, dt = Math.min(t - last, 0.05); last = t;
+    ctx.clearRect(0, 0, W, H);
+    drawStars(t);
+
+    if (!reduce) {
+      if (t > nextAmbient) { spawnHeart(Math.random() * W, H + 20, false); nextAmbient = t + 0.7 + Math.random() * 1.1; }
+      if (t > nextShoot) {
+        shoots.push({ x: Math.random() * W * 0.8 + W * 0.2, y: Math.random() * H * 0.35, vx: -(380 + Math.random() * 200), vy: 160 + Math.random() * 90, life: 0 });
+        nextShoot = t + 6 + Math.random() * 8;
+      }
+
+      for (var i = shoots.length - 1; i >= 0; i--) {
+        var sh = shoots[i];
+        sh.life += dt; sh.x += sh.vx * dt; sh.y += sh.vy * dt;
+        var al = Math.max(0, 1 - sh.life / 1.1);
+        var g = ctx.createLinearGradient(sh.x, sh.y, sh.x - sh.vx * 0.12, sh.y - sh.vy * 0.12);
+        g.addColorStop(0, 'rgba(247,240,255,' + al + ')');
+        g.addColorStop(1, 'rgba(247,240,255,0)');
+        ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(sh.x, sh.y); ctx.lineTo(sh.x - sh.vx * 0.12, sh.y - sh.vy * 0.12); ctx.stroke();
+        if (sh.life > 1.1) shoots.splice(i, 1);
+      }
+
+      for (var j = hearts.length - 1; j >= 0; j--) {
+        var h = hearts[j];
+        h.life += dt;
+        h.y += h.vy * 60 * dt;
+        h.x += (h.vx + Math.sin(t * h.sw + h.ph) * 0.35) * 60 * dt;
+        h.vx *= 0.985;
+        var fade = Math.min(1, h.life * 2) * Math.max(0, Math.min(1, (h.y + 40) / (H * 0.25)));
+        if (h.y < -40 || fade <= 0) { hearts.splice(j, 1); continue; }
+        ctx.save();
+        ctx.translate(h.x, h.y);
+        ctx.rotate(Math.sin(t * h.sw + h.ph) * 0.25);
+        var k = h.s / 24;
+        ctx.scale(k, k);
+        ctx.translate(-12, -12);
+        ctx.shadowColor = 'rgba(' + h.c + ',0.9)';
+        ctx.shadowBlur = 14 / k;
+        ctx.fillStyle = 'rgba(' + h.c + ',' + (h.a * fade).toFixed(3) + ')';
+        ctx.fill(heartPath);
+        ctx.restore();
+      }
+      setRing();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  document.addEventListener('pointerdown', function (e) {
+    if (reduce) return;
+    for (var i = 0; i < 7; i++) spawnHeart(e.clientX + (Math.random() - 0.5) * 24, e.clientY + (Math.random() - 0.5) * 12, true);
+  });
+
+  /* две страницы: первая с кнопкой (#start), вторая со счётчиком (#together) */
+  var current = null;
+
+  /* портрет из сердечек: яркость каждой ячейки хранится одним байтом */
+  var PORTRAIT = { cols: 64, rows: 80, data: '0000010203040507080a0d1013171b20272c2423242825282a28282c2e2f3036332d292424211f1f1d1a1b1a1d37473c3028221e19100c0a0604020100000000000102030506080b0d0f13171b20272e322723242524252825282c30313232393c2f2c27242222211e1b1a1b1d203d453c342c1f19110b090905030100000000000105070a0e12161a1f242a3037424129242320222625272a2d3030313233423f332d282423252827211b191b1c2c56524a3d1d15110d0a0805030201000000010105080b0f13171c21262c343d463126231e202626282a2a2b2d313235374946382f2a262322282b2c27201c1f2240564e4523110c08090706030201000000010206070a1014191f252b3238403f2b221d1f24262a292a2b2c2b2f3338435648383029262528282a2e312b2221242d5a52421d180d080906070403010000000202080b0e1213171c232a2a2d403225201c22282f2a292b2724282e3438465a48352a272623262c302a2b2a2722252d45563d1311100a09060604030200000004040d131a22262d353b43484a4529201b1d23302c2b2b222125252a313b5164523b2e242325292f313126242224252f3b462e160f140f09060705050201000005040f151c232c303b45525c643f23181b1e302e2d2c23232021282d35455561533b2d2623272a3236362d26222127314347391b12140f0a07080606020100000606131a202a333c454e575f5a321d191c2431342c2524232222232a38445861563b2c232124292f2f332c272523242d41493e1d18170d0c08070606030100000909151c242d363f48515a63572a1722152a2f3427272723202027303b4d5a5a563e2c242224272f322a2a2823212129394f472f1d150c0c09070506040100000a0b171e273039424b555e663c27221c132e3031242e272623222b3d4c575b66563e2e2720293033343528262a242425325653332315130d0c09080703010100070b0f18182c34454e58616934242d111a2c3a253231322c2d313a44545864716552382b2828253236342f2c292720242a5a60391a12120d0c0c090703020100040c080710332028282d3a4f382a2a091f3b3830323642434237414d4d5e778480684d3c32292c262d2e2c2f2a2522252448654b1a1213120e0a090705030100040c070a15281c2a333c474e363b1e0c2b492631576152474244414663798d9397907657443d312929242a2a2d2525222136685e24130f100d08080706040200030c0609172117283531525038471514353f35656b59514742455b6d8396a5a9aaa8a38c6d5a47342220202b2c231e2520276b6230140d0f0d0b090806040201050e0607141f142635405f5337490d1943495c4e46564c47576a8197a3afbabcb6b3b0a99884644b372822222a28231e1f1e6d653e150d0c0e0c0c0a06030201051106071020172734536f613e560516575c393f424d62778697a4acb4bbc1bebab9b5afaaa59d805b3f2b242226211f22166b6749190e0c110c0b09050402010317090816251d2d43627164444800224b2f3648758a8f939ba4acafb7bbbdbfc0bfb9b3afaea99f9483573129221b221d13676a50250e0b100d0909070402010316120e1e262951546a735a552e00272f2b608b9ca0a4a8adadb2b7bab9bdc2c1c0c1bbb0b1aba29b99947a3a2a1e231b11606c552e1110100e09080704020103120f141d221d455f6d755e5a180022346a8e98a6b0b1acb3afb3b7b5b5b4b7b9c1c1bab5b4aea29da19e8e7d3b2322160f586a592b161712110c0806050301020c171c22282a5b656f7772490b00285c7b939ea7b3b3b2b4b1b0adacafb3b2b8babab9b8bab1a4959d99928c793620110f4e626228181811110e0907050302010610131a18435d62706a762b05052d6b8696a1a3b3bbb6b4b0abaaa5abafb3b5b8b4b6bdb9b3a59d9c958f8b8b7c2b0c1350606927161511100b0906050302020c110f1417555f5f726e7f18020833798d96a0a3acb4b4b6aba5a8a6abaeafb1b3aeb2bab6aca29b9a958f8a908f53061749616a2d16130f0f0c0a08060503050d2637414656605e747977100007397e8f959ba2a8acababa8a3a3a5a8adabaeacabadb3ada6a09f9a968f898d8c4b041a40626c3412130d0e0c0b09070502030a1b25384d58565f7579520e00093e80969c9ea0a5aba6a6a5a1a1a3a6aca5a4a4a3a4adada9a19e9d99918c898527071b3c61683811130c0d0a0a0907040203121e26444e59555b7665390a000844849ea5a9a8acb1b1aca5a19fa0a8aca5a0a2a2abaeb0ada8a5a29c948f897f040f1b3462663912130f110e0b09060402010b192c45505a50597843260f00064b8ca6aaadb5b8b9b7aca0a4a2a5a4a8a39fa1a9b1b6bcbab1aea7a19a8f8c7100141a2f62644014140e100c0b090604020a0e0c3046515b50647324191b00055694aeb9c0c6c8c7bfb5aaafadaca8a9abacafb5b8bec9c9bfb9b3aca4948e63001615326767401a110c0d0a0c0a0604020b0d143c47525c58695b23131c00095ba5b5c4d4d7dbd3c8bcb7b5b0aba7aaafafb7bcbec5ced3d1cbc4beb2a79954011a132d6b603c1e100b0e0b0c090604020e131c3d48525d5a574b240f2801075fa7b7c7d7e3e7e2cec2beb6b6b4aeb2b5b9bcbcbfcad0d5dcdbd3c2b9aa9c4c07180e2f6c5f331c100d110e0c090504021014243e48535e573d492b133007055e909b9c99adcbdad7c3bdb7b9b7afb3bab9bcbfc0cbcdcecebba399999794420f13112f68612829120f110f0b080504031118303e49545943354e371f27140558a4a593795f5a6d82939ca1b1b3aeb4b7b9b8b6b3ae99846b61627685929234150f132961672630140d0d0c09070504031216273f49544d3f344a3c28261f0445909a723f3d2e1c2a516e7c9ea8a5acb1ada08c7c6141221a35577294a398331a0a1426576b3c32170e0a080808050403100c1e3f4a5549382e413f382334093d8d641d1e440d000022326a93a8a9acaba38e7141250000021b010a4a909c33190b17254e6a503a2e1c0d090a0a060403080a193f4a5343372e354f3f2d361237a4b28f928248282d382a7f84a7babcb9a77f5a1b2e1a00173f5c6380a4a130170e17254564492b2b22261c110906040406090e3f44493c31302752463e2d232c9abec0afb9997460607a8ba8b8d7dbd8c0947a5e505c5a7492b3b7bfb1a02818111627435a582925131918161007040306070f3a3240352c311f45424c2f361d86becfcdbebaada4a1a5a9bbcee2e2e5dab49274747a8aa1b4c0c9c1b092251612192a434f593c26140e100d0c0a070206050f2e2137312f2e1e393b4d3c312660bdcedddee2dcd5d1d1d2cadfebdfe4dfcdc6af9a949fb0c4d2d1c0b06e2b190e1c2b424f3d4b311e0f0f0d0c090704050809202135323520202c35413c383138a1cddce7e4dbd6ccd0dad1e3e2cbcfe1ded5cdc7beb6c2cfd8d0bfaf412f210d192f45563a26412e110f0f0e060405050808132c34372d1d23223730323839356cc6d1dcd9c4aaa7c5d4dae5d4a5acc5bea9b3a7abb1b7c1bec1be9c1f3024161a2a445e42241f3a281313090504050709090d20333628221d203127252e393a42a2c9c1b69a7f83a6d2dbdccf97a8bdb6b3b5a7858baec5c6c8b763162b231f242940585331211e2c27150805050508080a0d1227382b201d2333251e1c302b2c56a8ac9675574d7499bab09b8b7a787e9eb7c2c78892abb4b79a1d142126192c353d46574e2c2220261d0c08060507080a0f152839392f2c29302220171b1b19235a82704e2d3e758b919dbcc09d8b9096a6a4bab6908e99945105111b251c24353d3747483f2e221d12100a07050f16171c1c1c1c1b1d22272d262217120f0b0b0c233e587aaab5cceefffff4e2d5bcafb1aca5a9ac9a7b5b0c080d151b20272d302b2f34281c100c09070605040d0d0e10121418191a1b1a1d1815120e0904144c8db7c6cacdd6e1e3d8ceced1dbe2d1bba18a9ea6a2933a0009090e101821292c20171411100d0c0a07060403090c0e111314161717181515120e0b080a438f9ba8b4c3c1bab9bab1938eaabdcbd3d8cea87d758f9ea29626050b090d0f16191615141312120f0d0a07050402090b0e11131414131414110e0d080b245f8597a09ea7b6c3c1beb8b9968a96a0b2bbbec8bea38261859c9e8d2606080a0e1212141615141312100d0906050302080a0d1011111210110e0c0a0a1f51757c8394a2b2c2d0cfcbd4e7f8d1c3baa4aca6a8bab8a16341707f96948526060b0e121417161412100f0e0c080504030207090c0e0d0f0e0d0c0b0817405577807c7e85929aa9becddde8e3ded1d0dbbca0928cbac0996a73887a7e97988939200e121314130f0d0c0b0908070504020106080a0a0b0c0c0c0a0b295358607a83807f8690949cabb6c3d4ceb8aeb5ccc995784b95a99d9f9b92987e8396885e691e0b0c0e0e0b0a0908080706050302010507090a0b0c0b0a0e3352595b69818b87808282868e9394a0bec1ac9ca6acbbb082233e67bbb48992918a716f5558623b2e2e29241f150a07070605050302010507090a0a0b0b0f284e5d616170868d8b858786878f95939493adb6a3a3aab0b9a8780017a2b2a2978e7b6b3d404c4a40424039332e2a201007050504030201050708090a0a0f1a3d5e65626b7b8b93949094989994989ca2abb5bfbaaeafb6b7aea963157fbab6a18f7c77503439393b40403e3b3430292012060404030201050608090a0e141f3f5b6b71777c89929594999fa3a3a6a6aaacb8c7c4b5aa99b6b1b0a25949a4b7a59183895d3f3d3638414647423d352d261b0f0603020201040607090b11162131546c77777578899293949ba2a2adb0adaca9aeb6b5aa52aab4afb09b4765a49f918685383234393f4447443d38332d261e140a040201010406080a0d1218212c4b666f706e6975899092979da3afafafafa9a5a9afa76f75b0b6b3ac904570867e6c3e3b42434747433c3634302f2d2820170d050201010405070a0d1118212c3b586165615d5c758891929c9fa5aab0b1b5b4aaa7a6a85a9cb2b2a79f70584c252442524b4a494437302c2d2d2e2b2720191006020100030506090d1017212e37404f55544b3f46627c888c91969ea6a9b3b9b6a6a6aa9a5aa7aba09a7c3a241d39556059453b342a2c2d2e302e29251f181007020100030406080b0f162029333736372b17121925374e5b595746444b859bb7b1aba9a86b749f9b9b61241d36515b60573e342f3234363936312a231d160d0602010003040507080a0f15181816120c0b0e0d0e0e0c090602000000053059a8b5b3a9a49f55858b692122344f5d605b4e4b4b493f3a3f4038322a22191009040101000204050608090a0b0c0d0d0e11131415171614100d07040201303e547aaab3aaa098744036101b36505f5d615a535a5e5a524c49443a322a1f100704020100000203050607090a0b0c0e121618181a1b1c1d1d18100d0a080e54676a6990a8a699937b3118274052626766655f555f6062635c5043392f2616040302020100000303040507080a0b0d12161b1d1e20201f21211a13100f0c0c4e8b804b678491938556313f4d5e6d7478675357575d5c64625a4c40352a190704040302010000030404050608090b0f14191d202223232223221916151310132a545346545e625334306a74767c7d83651e4e585b5c60645f5643372712060505040302010000020406060607090d12161a1f2224252423231d191a18171513161a315365727b6439688085858988791c4864605f6166635b462a1207060606050403020100000203050708070a0f12161b1e1f202425211e1b1b1c1b1a1815120f0f4f8185815d63868b918e91833647726c656769675f310d0304040505050403020101000001030407090a0b1015181b1d1d2021201b1b1c1d1d1d1c1a191714121e738a744276959490918a46457776716e716a581903040505060605040303020100000001020306080b0d1214181919191817181a1c1c1d1e1e1d1c1b1a191613214b401e2c9392908b5d1974787776736d5d0f0305060607070606050402010100000001020305070b0c1114151310111416181a1b1d1d1e1e1e1e1d1c1b191714120f0c0a2e786d430f1a7f7b79756f6212050607080808080706040403010100000000010305070a0d0f100e0d0f111316181a1c1d1d1e1f1f1f1f1e1d1c1b191714110f0e0e0d0906074479766d5d18070709090a0a0908070504030201000000000001020407080b0b0a0b0d0f11131517191b1c1d1e1f1f201f1f1e1e1d1b1a18161412110f0d0b0b0b2540290f090a0a0b0a0b0a0908060504030201000000000001020305070707080a0c0e11131517191a1b1c1e1e1f1f20201f1e1e1d1c1a191816151412110f0e0d0c0c0c0c0c0c0c0b0b0a0807060503020101000000000000010304040406090a0b0e1012141618191a1c1d1e1e1f20201f1f1e1e1d1c1b1a19181716141312111110100f0e0d0d0b0b0a0807050403020100000000000000010202030406090a0b0d0f11141517181a1b1c1d1e1f1f20201f1f1f1e1e1d1c1b19181717151413121111100f0e0d0c0b09080605040201010000000000000000010203040508090b0d0e1012151617191a1c1d1e1e1f1f201f1f1f1f1f1e1c1c1b1a1918171615141312110f0f0d0c0b09070604030201000000000000000000010102030508090b0c0e1012141518181a1b1c1d1e1e1f1f1f201f201f1e1e1d1c1b1a1a19181614131211100e0d0c0a090705040302010000000000000000000001020304070a0b0c0e0f1113151718191a1c1d1e1e1e1f1f1f1f1f1f1f1f1d1d1c1b1b1a181716151412100f0e0c0b09070504030101000000000000000000000101020406070a0b0c0e101214151718181a1b1c1d1e1e1f1e1f1f1e1f1e1e1f1e1c1c1a19181817151412100f0d0b0907050402010100000000000000000000000102040507090a0b0d0e11121415161718191a1b1c1d1d1e1e1f1d1f1d1e1e1d1c1c1a19181817151312100e0c0a08070503020100000000000000000000000001010304060708090b0c0e101112131416171818191a1a1a1b1b1c1c1b1b1b1a1a19191715151412100f0d0b0a0806050302010000000000000000' };
+  var pc = $('pcanvas'), pctx = pc.getContext('2d');
+  var pCells = null, pW = 0, pD = 1, pT0 = 0, pRaf = 0, pTotal = 0;
+  $('pcap').textContent = CONFIG.portraitLine;
+
+  function buildPortrait() {
+    var hex = PORTRAIT.data, cols = PORTRAIT.cols, rows = PORTRAIT.rows;
+    pCells = [];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var v = (parseInt(hex.substr((r * cols + c) * 2, 2), 16) || 0) / 255;
+        if (v < 0.08) continue;
+        var dx = c / cols - 0.47, dy = r / rows - 0.44;
+        var t = Math.sqrt(dx * dx + dy * dy) * 4.5 + Math.random() * 1.4;
+        if (t > pTotal) pTotal = t;
+        pCells.push({
+          c: c, r: r, v: v, t: t,
+          col: 'rgb(' + Math.round(60 + 195 * v) + ',' + Math.round(20 + 215 * Math.pow(v, 1.4)) + ',' + Math.round(130 + 125 * v) + ')'
+        });
+      }
+    }
+  }
+  function sizePortrait() {
+    pD = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.floor(Math.min(window.innerWidth - 32, 520, (window.innerHeight - 190) / 1.25));
+    pW = Math.max(w, 200);
+    pc.style.width = pW + 'px';
+    pc.style.height = Math.round(pW * 1.25) + 'px';
+    pc.width = Math.round(pW * pD);
+    pc.height = Math.round(pW * 1.25 * pD);
+  }
+  function drawPortrait(el) {
+    if (!pCells) return;
+    var cell = pW / PORTRAIT.cols;
+    pctx.setTransform(1, 0, 0, 1, 0, 0);
+    pctx.clearRect(0, 0, pc.width, pc.height);
+    for (var i = 0; i < pCells.length; i++) {
+      var h = pCells[i], p = (el - h.t) / 0.6;
+      if (p <= 0) continue;
+      if (p > 1) p = 1;
+      var q = p - 1, s = 1 + 2.70158 * q * q * q + 1.70158 * q * q;
+      var k = cell * (0.25 + h.v) * s * 1.12 / 24;
+      pctx.globalAlpha = p;
+      pctx.fillStyle = h.col;
+      pctx.setTransform(pD * k, 0, 0, pD * k, pD * ((h.c + 0.5) * cell - 12 * k), pD * ((h.r + 0.5) * cell - 12 * k));
+      pctx.fill(heartPath);
+    }
+    pctx.globalAlpha = 1;
+  }
+  function runPortrait() {
+    cancelAnimationFrame(pRaf);
+    if (!pCells) buildPortrait();
+    sizePortrait();
+    if (reduce) { drawPortrait(1e9); return; }
+    pT0 = performance.now();
+    (function tick(now) {
+      var el = (now - pT0) / 1000;
+      drawPortrait(el);
+      if (el < pTotal + 0.7 && current === 'portrait') pRaf = requestAnimationFrame(tick);
+    })(pT0);
+  }
+  window.addEventListener('resize', function () {
+    if (current === 'portrait') { sizePortrait(); drawPortrait(1e9); }
+  });
+
+  function show(page) {
+    if (page === current) return;
+    current = page;
+    var stage = $('stage'), pt = $('portrait');
+    $('intro').hidden = page !== 'start';
+    stage.hidden = page !== 'together';
+    pt.hidden = page !== 'portrait';
+    stage.classList.remove('reveal');
+    pt.classList.remove('reveal');
+    if (page === 'together') {
+      void stage.offsetWidth;
+      stage.classList.add('reveal');
+      update();
+      setRing();
+    }
+    if (page === 'portrait') {
+      void pt.offsetWidth;
+      pt.classList.add('reveal');
+      runPortrait();
+    }
+    window.scrollTo(0, 0);
+  }
+  function fromHash() {
+    var h = location.hash;
+    show(h === '#together' ? 'together' : h === '#portrait' ? 'portrait' : 'start');
+  }
+  function go(page) {
+    try { location.hash = page; } catch (e) {}
+    show(page);
+  }
+  $('more').addEventListener('click', function () { go('portrait'); });
+  $('back2').addEventListener('click', function (e) { e.preventDefault(); go('together'); });
+  window.addEventListener('hashchange', fromHash);
+
+  $('ask').addEventListener('click', function () {
+    var r = this.getBoundingClientRect();
+    if (!reduce) {
+      for (var i = 0; i < 24; i++) spawnHeart(r.left + Math.random() * r.width, r.top + r.height / 2, true);
+    }
+    try { location.hash = 'together'; } catch (e) {}
+    show('together');
+  });
+  $('back').addEventListener('click', function (e) {
+    e.preventDefault();
+    try { location.hash = 'start'; } catch (err) {}
+    show('start');
+  });
+
+  resize();
+  update();
+  setRing();
+  /* всегда начинаем с первой страницы, даже если в адресе осталась пометка с прошлого раза */
+  show('start');
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  setInterval(function () { update(); if (reduce) setRing(); }, 250);
+  requestAnimationFrame(frame);
+})();
+</script>
